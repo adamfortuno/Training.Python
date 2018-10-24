@@ -1,0 +1,47 @@
+## Type declaration not needed
+name = "Adam"
+age = 93
+
+## With Python 3.5, you can use type hinting. This is present
+## for IDE's. It won't throw an exception if the wrong typed
+## value is passed. Your IDE will just yell at you.
+def add_numbers (a: int, b: int) -> int:
+    return a+b;
+
+## Data Types: int, float, string
+
+## If you want to explicitly cast a value to a specific type, 
+## you can...
+int(age) == 93
+
+##Strings
+'Hello'
+"Hello"
+"""Hello"""
+
+## It's common to have trip-quote string as a comment (just don't assign it to a value)
+
+"""
+stuff = "good, for, you"
+stuff.capitalize() ## capitalizes first letter
+stuff.replace('o','c') ## replaces o with c
+stuff.isalpha() ## returns true if the type is a string
+stuff.isdigit() ## returns true if the type is a digit
+stuff.split(',') ## splits the string by comma
+
+"""
+## Python uses the "format" method to mix variable values in a string
+"This {0} is {1} awesome!!".format('shit', 'freakn')
+
+## Python 3.6 introduced interpolation
+one = 'shit'
+two = 'freakn'
+f"This {one} is {two} awesome!!"
+
+## Note, you have to prefix the phrase with "f" and 
+## wrap braces around the variable names
+
+## Boolean (case matters)
+ ## True
+ ## False 
+ ## None <- Kind of like null; None is not not created
