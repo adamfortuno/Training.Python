@@ -193,9 +193,36 @@ type(<identifier_name>)
 type(<identifier_name>.<identifier_name>)
 ```
 
+Bytes are sequences of bytes used for raw binary data or fixed width single byte encoding.
+
+```python
+thing = b'my data I want to store as bytes'
+```
+
+`bytes` support indexing (like in an array or string) and splitting. You can convert a string stored as a byte into a string provided you can specify the encoding:
+
+```python
+thing = b'my data I want to store as bytes'
+decoded = thing.decode('utf8')
+
+stuff = 'more stuff I want to store'
+stuff_byte = stuff.encode('utf8')
+stuff
+```
+
+*NOTE*: http responses are transmitted as byte streams.
+
 #### Variables: Strings
 
-Strings are representated as variables in Python like Powershell and Java. The objects have a rich set of methods ot maniuplate their value.
+String are immutable sequences of unicode code points. They are implemented as objects, like Powershell and Java, and they  have a rich set of methods ot maniuplate their value.
+
+New lines are represented as "\n" in Python on all platforms: Universal Newline Support. You can escape a charcter in Python using the backslash.
+
+You can also create raw strings. These are strings that don't respect escape characters:
+
+```python
+raw = r'this is a raw string'
+```
 
 ```Python
 my_name = "john scena"
@@ -260,6 +287,8 @@ team[1:-1]
 
 len(team)                               '''Gives me the length of a list'''
 del team[2]                             '''Deletes the third element (lift shifts left)'''
+
+stuff = [1, 2, 3, 4, ]                  '''You can close a list with a comma.
 ```
 
 ### Dictionaries
@@ -318,15 +347,20 @@ else:
 ### Loops
 
 ```Python
-for <obj> in <list>:        '''General structure of a foreach loop in Python'''
+'''General structure of a foreach loop in Python'''
+for <obj> in <list>:
 
 t = ['adam', 'billy', 'suzie']		
 for each i in t:
 
-for i in range(10):         '''Runs a loop from 0 to 10'''
+'''Runs a loop from 0 to 10'''
+for i in range(10):
 
-break                       '''Stops the loop from executing'''
-continue                    '''Continues the loop without running this iteration'''
+'''Stops the loop from executing'''
+break
+
+'''Continues the loop without running this iteration'''
+continue
 
 while a < 10:
     a++
@@ -453,9 +487,10 @@ double(3)
 ### Classes
 
 ```Python
+''' The 'pass' keyword tells python to do nothing. '''
+''' It's usable in functions as well.'''
 class Student:
-    pass                                    ''' The 'pass' keyword tells python to do nothing. '''
-                                            ''' It's usable in functions as well.'''
+    pass
 
 class door:
     state = closed
