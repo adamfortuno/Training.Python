@@ -22,7 +22,8 @@
 8. Pythonic style: simplicity, readability, and expressiveness
     1. Never mix spaces and tabs
     2. Two blank lines between functions
-    3. Indent 4 spaces; Indent after a colon (:)    
+    3. Indent 4 spaces; Indent after a colon (:)
+    4. Empty code blocks are not allowed in Pythin
 
 ## Language Reference
 
@@ -212,6 +213,8 @@ String are immutable sequences of unicode code points.
 my_name = "john scena"
 ```
 
+We say they're immutable because you can't modify a string in place.
+
 Strings can be wrapped in single and double quotes as well as triple-double quotes
 
 ```python
@@ -270,6 +273,29 @@ stuff
 
 *NOTE*: http responses are transmitted as byte streams.
 
+You can concatenate a string with the plus operator:
+
+str1 = 'this'
+str2 = 'that'
+str1 + str2
+
+To join a large number of strings, use the `join()` method of the string class because its more efficent. The method inserts a separator into a collection of strings. You would pass the list of strings you want to join into join as a list of strings.
+
+```python
+<string>.join(<list_of_strings>)
+''.join([str1, str2])
+```
+
+The partition method returns a tuple.
+
+```python
+<string>.partition('delimiter')
+first, delimiter, second = <string>.partition('delimiter')
+first, _, second = <string>.partition('delimiter')
+```
+
+*NOTE:* There is an unwritten convention where underscores represent un-used or un-wanted values.
+
 ### Lists
 
 Lists are a sequence of objects like arrays in other languages. Lists are mutable, you can replace, add, and remove elements. List assignment sytnax is as follows:
@@ -301,7 +327,15 @@ Although not recommended, you can have multiple types in a single list. There is
 list("this is my thing")
 ```
 
-List indexes are 0 based. The following is the value retrieval syntax:
+ 1,  2,  3,  4,  5
+-------------------
+ 0,  1,  2,  3,  4
+-5, -4, -3, -2, -1
+
+l[2] == 3
+l[-2] == 4
+
+The following is the value retrieval syntax:
 
 ```python
 ## retrieve second item in list
@@ -309,6 +343,7 @@ team[1]
 
 ## Gives us the last item in the list
 team[-1]
+```
 
 ## (List slicing) gives us a portion of the list
 team[<start_element>:<end_element>]
@@ -316,6 +351,72 @@ team[<start_element>:<end_element>]
 team[1:]
 team[1:-1]
 ```
+
+slicing
+
+```python
+t = [1 , 33, 2, 32, 12]
+
+## 1st to 3rd element
+t[1:3]
+
+## 3rd element to end
+t[3:]
+
+## Everything up to 3rd element
+t[:3]
+```
+
+The following are ways to do a shallow copy of a list:
+
+```python
+t = [ [11, 23], [22, 31]]
+t[:] 
+```
+
+A shallow copy creates a new list; however, items in that list reference the same objects as the prior list. To do a deep copy, use the `copy()` method from Python's standard library.
+
+
+
+```python
+t = [ 'fox', 'dog', 'cat', 'bat']
+t.index('dog')
+```
+
+
+## Remove element 2
+del t[2]
+
+## Remove the element with value dog
+t.remove('dog')
+
+
+
+<list>.insert(<index>, <value>)
+t.insert(2, 61)
+
+The following re-order the elements of a list in-place:
+
+<list>.reverse()
+<list>.sort() # ascending
+<list>.sort(reverse=True) #descending
+
+The `sort()` method actually accepts two parameters: key and reverse. `reverse` directs the order of the sort: ascending or descending. `key` accepts a callable object which is used to sort the list:
+
+```python
+## We're going to sort the words in this sentence by size
+phrase = 'the brown dog jumps over the clever fox'
+words = phrase.split()
+words
+words.sort(key=len)
+words
+```
+If you don't want to modify a list, you can use the following:
+
+`sorted()`: returns a sorted copy of the list.
+`reversed()`: returns an iterator object, which you can pass to the `list()` constructor to create an actual list.
+
+These will work on any finite iterable source object.
 
 ### Dictionaries
 
@@ -354,7 +455,7 @@ team_member.get("name", "unknown")
 team_member.keys()
 team_member.values()
 ```
-We can remove items with the `del` command:
+We can remove items with the `del` command: `del <dictionary>[<key-name>]`.
 
 ```python
 del team[2]
@@ -362,14 +463,147 @@ del team[2]
 
 You can get the size of a list with `len(team)`.
 
-### Tuples
+Internally a dictionary maintains references to the key and value objects. This means two different dictionaries could reference the same key and value objects.
 
 ```python
-## Immutable
-tuple = (1, 2, 3, 'a')
+things = [('Mikey', 12), ('Ralphy',  8), ('Kiki', 16)]
+thangs = dict(things)
+```
+
+* Dictionary keys are immutable. Dictionary values are mutable.
+* If you iterate over a Dictionary, you'll get it's keys.
+
+Dictionary copying is shallow by default: `<dictionary>.copy()`. You can create a deep copy by 
+
+```python
+things = { 'name': 'Adam', 'age': 12 }
+
+# Option-1: Shallow Copy
+thangs = things.copy()
+
+# Option-2: Deep Copy
+
+```
+* Updating an existing key, updates the key's value
+
+* Dictionaries are iterable.
+* <dictionary>.keys(): returns a list of keys from a given dictionary.
+* <dictionary>.values(): returns a list of values from a given dictionary.
+* <dictionary>.items(): iterates over a dictionary returning a tuple with the key and value.
+
+You can determine if a value is or is not a key in a dictionary:
+
+```python
+<key-name> in <dictionary>
+<key-name> not in <dictionary>
+```
+
+```python
+things = {...}
+from pprint import pprint as pp
+pp.(things)
+```
+
+### Tuples
+
+A **Tuple** is an immutable sequence of arbitrary objects: integers, floats, strings, etc. The following are ways you can initialize a tuple:
+
+```python
+## single element tuple
+tup = (123, )
+
+## empty tuple
+tup = ()
+
+tuple unpacking...
+x, y = func_returning_two_tuples()
+
+## you can convert a list to a tuple with....
+tuple(<list>)
+```
+
+Tuples can be Elements of a tuple are referenced like those of a list.
+
+```python
+t = ("a", 1, 2.3)
+t[0]
+```
+
+* You can concatenate two or more Tuples with the plus operator.
+* You can iterate over a Tuple with a for-loop. 
+
+You can have nested Tuples:
+
+```python
+things = ((1, 2), (3, 4))
+things[0][0]
+```
+
+Tuple unpacking is a destructuring operation.
+
+You can determine membership in a tuple with the following:
+
+```python
+1 in (1, 2, 3, 4)
+5 not in (1, 2, 3, 4)
+```
+Python has an idiom for swapping values:
+
+```python
+a = 'jelly'
+b = 'bean'
+
+print(a, b)
+
+a, b = b, a
+
+print(a, b)
 ```
 
 ### Sets
+
+Unordered collection of unique items.
+
+p = {1, 2, 3, 4}
+
+## When you init a set like this, duplicates are 
+## removed
+p = set([1, 2, 3, 4, 4])
+
+type(p) == 'set'
+
+You can determine membership in a set with the `in` and `not in` operators:
+
+```python
+p = {2, 4, 6, 8, 10}
+3 in p
+3 not in p
+```
+
+* You can add values to an existing set with the `add()` method: `<set>.add(<value>)`
+* Adding a value that already exist does nothing.
+* You can remove an item from the set with the `remove()` method: `<set>.remove()`
+* You can make a shallow copy of a set with the `copy()` method.
+* You can merge two sets with the `<set>.update()` method.
+
+```python
+a = {1, 3, 5}
+b = {2, 4, 6}
+a.update(b)
+a ## shows 1, 2, 3, 4, 5, 6
+```
+
+You can execute set algebra with sets: unions, difference, and intersections. You can also evaluate whether two sets are
+subset, superset, or disjointed.
+
+<setA>.union(<setB>)
+<setA>.difference(<setB>)
+<setA>.intersection(<setB>)
+
+<setA>.issubset(<setB>)
+<setA>.issuperset(<setB>)
+<setA>.isdisjoint(<setB>)
+
 
 ```python
 ## Returns a relational set
@@ -378,7 +612,20 @@ set([3, 2, 1, 1])
 
 ### Ranges
 
-Range values
+A range is a type of sequence representing an arithmetic progression of integers e.g., 1, 2, 3, 4...
+
+```python
+## Explicit starting position and increment of 1
+range(<start>, <stop>)
+
+## Default starting position of 0 and increment of 1
+range(<stop>)
+
+## Explicit starting, ending, and increment
+range(<start>, <stop>, <increment>)
+```
+
+...for example...
 
 ```python
 ## Creates a range object from 0 to 10
@@ -389,6 +636,21 @@ range(1, 10)
 
 ## Creates a range object from 1 to 10 by 2's 1, 3, 5
 range(1, 10, 2)
+```
+
+You can create a list of numbers with the pattern, which creates a list with values 0 thru 4:
+
+```python
+list(range(5))
+```
+Try to iterate over an object whenever you can.
+
+If you need a count and value, use the `enumerate()` function. This function returns a tuple `(count, value)`.
+
+```python
+t = [1 , 33, 2, 32, 12]
+for p in enumerate(t):
+    print(p)
 ```
 
 ### Functions
@@ -494,7 +756,19 @@ double(3)
 
 ### Exception Handling
 
-Error handling in Python is handing through a `TRY CATCH` statement with syntax:
+Exceptions are a mechanism for interrupting normal program flow in response to an error event and continuing in a surrounding context. An exception will look something like the following:
+
+```
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "C:\Users\abomb\dev\adamfortuno\Training.Python.Concepts\exceptional.py", line 18, in convert
+    numbers.append(mapping[token])
+KeyError: 'sink'
+```
+
+The `KeyError` is the type of the exception thrown. `sink` is the error message. It is part of the exception's payload.
+
+Error handling in Python is handing through a `TRY EXCEPT` statement:
 
 ```python
 student = { 'b' : 123 }
@@ -520,6 +794,128 @@ except KeyError:
     print('Error accessing student name')
 except Exception:
     print("Something happened. I'm just a *@#$ that likes big @&#@.")
+
+
+## Catch either a key error, type error, or generic exception.
+## Notice we employ the same handler for key and type errors.
+try:
+    last_name = teacher['a']
+except (TypeError, KeyError):
+    print('Error accessing student name')
+except Exception:
+    print("Something happened. I'm just a *@#$ that likes big @&#@.")
+
+## Catch either a key error, type error, or generic exception.
+## We're not taking any actuon when a type or key error occurs.
+## We can't have an empty code block, so we use `pass` to tell
+## Python to do nothing here.
+try:
+    last_name = teacher['a']
+except (TypeError, KeyError):
+    pass
+except Exception:
+    print("Something happened. I'm just a *@#$ that likes big @&#@.")
+```
+
+A single handler can capture multiple exceptions. You implement this by specifying the exceptions in a tuple.
+
+```python
+import sys
+
+## Accessing the exception object
+except Exception as error:
+    print(f"An error occurred: {error!r}", file=sys.stderr)
+```
+
+*NOTE:* If you use the `!r` after your expression, the REPL representation will be inserted into your string. In the case of exceptions, this gives us more detail about the exception.
+
+Raise an exception with the `raise` keyword. The following are a few examples calling raise:
+
+```python
+## Without a parameter, `raise` re-raises an existing exception:
+try:
+    last_name = teacher['a']
+except (TypeError, KeyError):
+    print("Something happened. I'm just a *@#$ that likes big @&#@.")
+    raise
+```
+
+* Python provides several standard exception types.
+* Invalid parameters typically generate a `ValueError`.
+* You can generate a `ValueError` by passing it as a parameter to `raise`
+* You can then catch and handle `ValueError` errors like any other error.
+
+```python
+#!/usr/bin/env python3
+
+def sqrt(x):
+    try:
+        return_value = None
+
+        if x < 1:
+            raise ValueError('Cannot compute the square root of values less than 1.')
+        
+        return_value = 1
+    except ValueError as err:
+        print(f"Bad Stuff: {err}")
+    
+    return return_value
+
+print(sqrt(1))
+print(sqrt(0))
+```
+
+Exceptions are a part of a function's API as well as certain protocols.
+
+* Sequences should raise an IndexError for out-of-bounds indexing.
+* Exceptions must e implemented and documented.
+* Built-in exceptions are often the right ones to use.
+
+You can create your own exceptions.
+
+There are two approaches to handling potentially dangerous situations:
+
+1. "Look before you leap" promotes verification of the system's state prior to taking some action. For example, ensuring a file is present before attempting to access it.
+2. "Easier to ask forgiveness than permission" promotes handling bad things that might have happened after you tried to do whatever you did. For example, just access the file. If it's not there or it's the wrong type, handle that exception.
+
+Python embraces EAFP. Issues generate exceptions
+
+```python
+## You can introduce a `finally` block with the 
+## following syntax:
+try:
+    ...
+except:
+    ...
+finally:
+    ...
+```
+
+There are occasions where you'll have to use platform specific code. To interact with console on Windows, you'll use the  `msvcrt` module. To interact with the console on MacOS or Linux, you'll use the `tty`, `termios`, and `sys` modules. The following module loads the correct module based on it's presence using try-catch-finally blocks:
+
+```python
+## module definition...
+
+try:
+    import msvcrt
+
+    def getkey():
+        return msvcrt.getch()
+
+except ImportError:
+    import sys, tty, termios
+
+    def getkey():
+        fd = sys.stdin.fileno()
+        original_attributes = termios.tcgetattr(fd)
+
+        try:
+            tty.setraw(sys.stdin.fileno())
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, original_attributes)
+        
+        return ch
 ```
 
 ### Extensibility - Modules and Packages
@@ -623,11 +1019,10 @@ In the same sphere as the `if` statement is the terniary operation:
 
 ### Loops
 
-Python has three types of loops:
+Python has two types of loops:
 
-* For-Each
-* For
-* While
+* For: behaves like a for-each look in another languages e.g., PowerShell.
+* While: behaves like While loops in Java or C++
 
 Execution sytax for each loop is as follows:
 
@@ -637,9 +1032,6 @@ for <obj> in <list>:
 
 t = ['adam', 'billy', 'suzie']
 for each i in t:
-
-## For Loop
-for i in range(10):
 
 ## While Loop
 while a < 10:
@@ -721,6 +1113,18 @@ def <function_name>():
     Comment block
     """
 ```
+
+Protocols xxxx
+
+* Container: 
+
+
+* Sized: 
+* Iterable: 
+* Sequence: 
+* Mutable Sequence: 
+* Mutable Set: 
+* Mutable Mapping: 
 
 ### File Access
 
@@ -853,3 +1257,144 @@ os.system('CLS')
 (Q) Can I use Python with .NET Libraries?
 
 You can use IronPython. IronPython is a port of the Python programming language to the .NET framework. The following article talks about using IronPython to script the SMO library: [Using SMO to manage a MS SQL Database](http://www.ironpython.info/index.php?title=Using_SMO_to_manage_a_MS_SQL_Database).
+
+
+
+## Iterables
+
+Comprehensions are a concise syntax for describing lists, sets, and dictionaries. The syntax for each collection's comprehension is slightly different:
+
+* Lists: Comprehensions are enclosed in square brackets, taking the form: `[expression(item) for item in <set>]`
+* Set: Comprehensions are enclosed in curly braces, taking the form: `{expression(item) for item in <set>}`
+* Dictionary: Comprehensions are enclosed in curly braces, taking the form:
+
+```
+{
+    key-expression(item): value-expression(item) for item in <set>
+}
+```
+
+For example...
+
+```python
+## List Comprehension
+words = "i love to write big long complicated sentences to wow my readers.".split()
+[len(word) for word in words]
+
+## Set Comprehension
+from math import factorial
+{ len(str(factorial(x))) for x in range(20) }
+
+## Dictionary Comprehension
+ctry_to_cap = {
+    'United States': 'Washington',
+    'United kingdom': 'London',
+    'France': 'Paris',
+    'Brazil': 'Brasilia'
+}
+{ capital: country for country, capital in ctry_to_cap.items() }
+```
+
+* In the example, we unpack the tuple returned by `ctry_to_cap.items()` in to `country` and `capital` respectively
+* You can assign the result of a comprehension to a variable
+* Comprehensions should have no side-effects
+
+Comprehensions permit certain values to be filtered out.
+
+1. Create a filtering function. Function should return False for values to be removed and True for values to be retained.
+2. The function should take the form: `[item for item in <list> if <filter-function>()]`
+
+```python
+from math import sqrt
+
+def is_prime(x):
+    isPrime = True
+
+    if x < 2:
+        isPrime = False
+
+    for i in range(2, int(sqrt(x)) + 1):
+        if x % i == 0:
+            isPrime = False
+
+    return isPrime
+
+print([x for x in range(101) if is_prime(x)])
+```
+## Iteration Protocols
+
+Iteration protocols involve getting items in a collection one-by-one and doing something with them. The most common method of iterating over a collection is with a `For` loop, which iterates over the whole sequence.
+
+* Iterable Protocol: involves passing an interable-object to the `iter()` function receiving back an iterator
+* Iterator Objects: iterator object can be passed to the `next()` function to get the next value in the collection
+
+```python
+p = [1, 2, 3, 4]
+p_it = iter(p)
+next(p_it)
+```
+
+## Generator Functions
+
+* A generator is a function with one or more yield statements with-in it.
+* Generators are lazy; computation happens just-in-time
+
+```python
+#!/usr/bin/env python3
+
+## Creating a generator function
+def foo():
+    yield 1
+    yield 2
+    yield 3
+
+## Calling a generator
+f = foo()
+
+print(next(f))
+print(next(f))
+print(next(f))
+
+## This will generate an error as their is no further yields
+print(next(f))
+```
+
+* Generator expressions are a cross between generators and comprehensions.
+* Generators are single use objects.
+    * To recreate a generator from a generator expression, you must execute the expression again.
+
+```python
+sum( (x * x for x in range(1, 10000001)) )
+```
+
+Iteration is a central feature of Python. Python provides a series of functions to exploit iterators, and built-in functions are expanded by the `itertools` module.
+
+`any(<iterable>)` determines if any elements are true.
+`all(<iterable>)` determines if all elements are true.
+`zip()` syncronizes iteration across two iterables.
+`sum()`
+`min()`
+`max()`
+
+
+```python
+sunday = [12, 14, 15, 22, 13, 22, 31]
+monday = [22, 21, 19, 24, 23, 19, 41]
+tuesday = [34, 22, 20, 18, 25, 27, 29]
+
+## Combines the two series
+for item in zip(sunday, monday):
+        print(item)
+
+## Get the average temp for the first sample
+for sun, mon in zip(sunday, monday):
+    print( "avg = ", (sun + mon) / 2 )
+
+## Get the min, max, and avg temp for each sample
+for temps in zip(sunday, monday, tuesday):
+    print( f"min = {min(temps):4.1f}, max = {max(temps):4.1f}, avg = {sum(temps) / len(temps):4.1f}" )
+```
+
+* Iterable objects can be iterated item by item.
+* Generators are iterators
+* Generators can maintain explicit internal state between yields
