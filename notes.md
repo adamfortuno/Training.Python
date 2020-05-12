@@ -1,6 +1,6 @@
 # Python Notes
 
-## Language Background
+## Background
 
 1. Python is an open source project managed by the not-for-profit Python Software Foundation.
 2. Python versions for Windows, MacOS, and Linux flavors
@@ -15,7 +15,7 @@
     2. 3.x branch is under active development; use for new projects.
 5. Scripts are saved with the ".py" file extension.
 6. Standard library documentation is available at Python.org
-7. *Python enhancement proposals* (PEPs) are where enhancement requests are made.
+7. *Python enhancement proposals* (PEPs) are Python enhancement requests.
     1. PEP 8: Describes how you should format your code.
     2. PEP 20: Describes the guiding principals of Python.
         1. You can see this from the REPL by typing `import this`.
@@ -25,7 +25,35 @@
     3. Indent 4 spaces; Indent after a colon (:)
     4. Empty code blocks are not allowed in Pythin
 
-## Language Reference
+## Installing Python
+
+In the following, you'll install Python then check the version of Python. Check the version of Python after installation to make sure (a) Python is in the path and (b) you have the right version.
+
+On MacOS, install Python3 via `brew`:
+
+```bash
+brew install python3
+Python3 --version
+```
+
+MacOS ships with Python 2.x by default. You're installing Python3. Everything will have a "3" suffix: `python3` and `pip3` and `ipython3`.
+
+## Installing and/or Upgrading PIP
+
+You can install modules with pip using the following sytnax:
+
+```bash
+pip3 install <module>
+pip3 install ipython3 # this example installs ipython3
+```
+
+You can upgrade pip with the following:
+
+```bash
+pip3 install --upgrade pip
+```
+
+## The REPL
 
 Python ships with an interface: **REPL**:
 
@@ -35,7 +63,7 @@ Python ships with an interface: **REPL**:
 
 Python is case sensitive. It uses indentation to delineate code blocks (vs. brackets).
 
-### Code Documentation and Comments
+## Code Documentation and Comments
 
 Python differentiates between documentation and comments. Documentation is placed in docstrings. A **docstring** is implemented as a triple quote: 
 
@@ -119,7 +147,38 @@ def thinger():
     print("Fun!")
 ```
 
-### Variables and Primitve Types
+The line continuation character is the backslash, `\`:
+
+```python
+def console_card_printer(passenger, seat, flight_number, aircraft):
+    output= f"| Name: {passenger}" \
+            f"  Flight: {flight_number}" \
+            ...
+```
+
+You can't have an empty code block in Python. If you need to create a code block without any logic, you have to include the `pass` keyword there. The following are some example of it in practice:
+
+```python
+## Using `pass` in a function
+def foo:
+    pass
+
+## Using `pass` in a class definition
+class Student:
+    pass
+
+## Using `pass` in an if-else statement
+things = 12
+
+if things > 0 and things <= 10:
+    pass
+elif things > 10 and things <= 20:
+    print("Warmer!")
+elif things > 20:
+    print("Hot!")
+```
+
+## Variables: Primitves
 
 Python is not an "aesthetically typed language", programmers don't assign variables when declaring like PowerShell or Perl.
 
@@ -204,10 +263,9 @@ value = 3.1
 int(value) == 3
 ```
 
-#### Strings and Bytes
+## Variables: Strings and Bytes
 
 String are immutable sequences of unicode code points.
-
 
 ```Python
 my_name = "john scena"
@@ -275,9 +333,11 @@ stuff
 
 You can concatenate a string with the plus operator:
 
+```python
 str1 = 'this'
 str2 = 'that'
 str1 + str2
+```
 
 To join a large number of strings, use the `join()` method of the string class because its more efficent. The method inserts a separator into a collection of strings. You would pass the list of strings you want to join into join as a list of strings.
 
@@ -296,7 +356,7 @@ first, _, second = <string>.partition('delimiter')
 
 *NOTE:* There is an unwritten convention where underscores represent un-used or un-wanted values.
 
-### Lists
+## Structures: Lists
 
 Lists are a sequence of objects like arrays in other languages. Lists are mutable, you can replace, add, and remove elements. List assignment sytnax is as follows:
 
@@ -344,62 +404,72 @@ team[1]
 ## Gives us the last item in the list
 team[-1]
 ```
+List slicing gives us a portion of the list. Slicing follows the following format:
 
-## (List slicing) gives us a portion of the list
+```python
 team[<start_element>:<end_element>]
-
-team[1:]
-team[1:-1]
 ```
 
-slicing
+...for example...
 
 ```python
 t = [1 , 33, 2, 32, 12]
 
-## 1st to 3rd element
+## 3rd to 4th element
 t[1:3]
 
-## 3rd element to end
+## 4th element to end
 t[3:]
 
 ## Everything up to 3rd element
 t[:3]
+
+## Last element in the lsit
+t[-1]
+
+## All elements
+t[:]
 ```
 
 The following are ways to do a shallow copy of a list:
 
-```python
-t = [ [11, 23], [22, 31]]
-t[:] 
-```
+TBA - Shallow copy a list
 
-A shallow copy creates a new list; however, items in that list reference the same objects as the prior list. To do a deep copy, use the `copy()` method from Python's standard library.
+A shallow copy creates a new list; however, items in that list reference the same objects as the prior list.
 
-
+To do a deep copy, use the `copy()` method from Python's standard library.
 
 ```python
-t = [ 'fox', 'dog', 'cat', 'bat']
-t.index('dog')
-```
+list_object = [ 'fox', 'dog', 'cat', 'bat']
 
+## Add an item to the end of the list
+list_object.append('nat')
+
+## Insert an element into at the specified index
+list_object.insert(<index>, <value>)
+
+## Returns the index for the first occurrence of `dog`
+list_object.index('dog')
+
+## Pop the last item from the list
+list_object.pop()
+
+## Pop the specified item from the list
+list_object.pop(3)
 
 ## Remove element 2
-del t[2]
+del list_object[2]
 
 ## Remove the element with value dog
-t.remove('dog')
+list_object.remove('dog')
 
+## Reverse the order of a list
+list_object.reverse()
 
-
-<list>.insert(<index>, <value>)
-t.insert(2, 61)
-
-The following re-order the elements of a list in-place:
-
-<list>.reverse()
-<list>.sort() # ascending
-<list>.sort(reverse=True) #descending
+## Sort a list (ascending by default)
+list_object.sort()
+list_object.sort(reverse=True)
+```
 
 The `sort()` method actually accepts two parameters: key and reverse. `reverse` directs the order of the sort: ascending or descending. `key` accepts a callable object which is used to sort the list:
 
@@ -754,6 +824,29 @@ double(3)
 4
 ```
 
+Python, like JavaScript, supports closures. A **closure** is a functions inside of another functions.
+
+* A closure can reference variables declared in the parent function.
+* A closure can be returned by the parent function
+
+You can employ a closure whenever you want a function to reference values that might change at runtime yet remain static from one invocation to the next.
+
+```python
+def foo(name):
+    whatevs = 'something'
+
+    def bar(name):
+        return ' '.join([name, whatevs])
+
+    return bar
+
+
+something = foo('kenny')
+
+## The following prints "adam something" to the REPL
+print(something('adam'))
+```
+
 ### Exception Handling
 
 Exceptions are a mechanism for interrupting normal program flow in response to an error event and continuing in a surrounding context. An exception will look something like the following:
@@ -955,28 +1048,45 @@ from <file_name_without_file_extension> import <class_name>
 t = <ClassName>()
 ```
 
-### Managing Your Python Environment
+## Virtual Environments
 
-Python includes a feature named **virtual environments**.
+Python installs modules centrally. Central management can be a problematic when separate projects include different versions of the same module. A **virtual environment** isolate projects from one another providing a sandbox for each solution.
 
-```Bash
-# Verify the version of Python in your PATH
-Python --Version
+Virtual environments are implemented through the `venv` module, which ships as a standard library in Python3.
 
-# Install a module using PIP
-pip install <module>
+1. Create a new directory: `mkdir environments`
+2. Navigate to the new directory: `cd ./environments`
+3. Create a new virtual environment: `python3 -m venv foobar`. This creates a directory named `foobar`.
 
-# Upgrade PIP to the latest version
-pip install --upgrade pip`
+**NOTE:** Use of `python3 -m venv` is the preferred way to create virtual environments as of Python 3.6 and greater.
 
-# Check your virtual environment
-virtualenv <environment_name>
+4. Load the environment's configuration script: `source foobar/bin/activate`.
 
-## Run a Python script
-python <script_name>
+At this point, you're in your environment's shell. You can exit the environment by running the command `deactivate`.
+
+Older versions of Python used a module named `virtualenv` in place of `venv`. `virtualenv` wasn't included as a standard library pursuant, you had to install it first.
+
+```python
+## Setting up a virtual environment
+pip install virtualenv
+
+## Create the environment
+mkdir ./environments && cd ./environments
+
+## Option-1: Create an environment using the current version
+## of Python
+virtualenv foobar
+
+## Option-2: Create an environment using a specific version
+## of Python
+virtualenv --python=<python_version> <env_name>
+
+## Activate the environment
+cd ./foobar
+source ./bin/activate
 ```
 
-### Expressions and Conditional Logic
+## Expressions, Conditional Logic, and Loops
 
 Python implements the following comparison operators:
 
@@ -989,7 +1099,7 @@ Python implements the following comparison operators:
 not <expression>                    ## Express Not Evaluate to True
 ```
 
-Python's `if-elif-else` syntax is as follows:
+Python employs a traditional if, else-if, and else type conditional logic:
 
 ```python
 if <expression>:
@@ -1000,7 +1110,7 @@ else:
     do-something
 ```
 
-Here is an example:
+...for example...
 
 ```python
 number = 2
@@ -1009,22 +1119,30 @@ if number == 2:
     print('Yes')
 ```
 
-In the same sphere as the `if` statement is the terniary operation:
+Language authors offer a terniary version:
 
 ```python
 <true-condition> if <expression> else <false-condition>
+```
 
+...for example...
+
+```python
 'larger' if a > b else 'smaller'
 ```
 
-### Loops
+And, you can build complex expressions with the `and` and `or` operators:
+
+`if ( x = 1 and y = 12 )`
+
+These work exactly like you'd expect.
 
 Python has two types of loops:
 
 * For: behaves like a for-each look in another languages e.g., PowerShell.
 * While: behaves like While loops in Java or C++
 
-Execution sytax for each loop is as follows:
+The for loop iterates over an "iterable" (e.g., list, tuple, etc.):
 
 ```Python
 ## For-Each Loop
@@ -1032,10 +1150,29 @@ for <obj> in <list>:
 
 t = ['adam', 'billy', 'suzie']
 for each i in t:
+```
 
+Python doesn't implement the traditional `for` loop:
+
+```javascript
+for (i = 0; i < 20; i++) {
+    console.log(`This is iteration ${i}`)
+}
+```
+
+You can mimic the behavior using a range object. 
+
+```python
+for index in range(10):
+    print(index)
+```
+
+Python implements are pretty standard `while` loop. The loop takes an expression. It continues executing until the expression is false:
+
+```python
 ## While Loop
 while a < 10:
-    a++
+    a += 1
 
 ## There is no do...while loop in Python.
 ## Developers use breaks to mimic that flow
@@ -1044,7 +1181,11 @@ while 1 == 1:
 
     if done == True:
         break
+```
 
+You can break loop execution with `break`, and you can skip to the next iteration with `continue`.
+
+```python
 ## Stops the loop from executing
 break
 
@@ -1052,15 +1193,12 @@ break
 continue
 ```
 
-### Classes
+### Classes and Objects
+
+Python implements the traditional OOP class to define an object:
 
 ```Python
-## The 'pass' keyword tells python to do nothing.
-## It's usable in functions as well.'''
-class Student:
-    pass
-
-class door:
+class Door:
     state = closed
 
     ## Constructor
@@ -1076,7 +1214,15 @@ class door:
     def open_door(self):
         self.state = 'open'
         return self.state
+```
 
+* By convention, class names in Python start with a capitol letter.
+* Methods always take `self` as thier first parameter.
+* There is no private or protected scope for data members in Python
+* You define static variables in the body of the class
+* You define data members in the `__init__()` method
+
+```python
 ## First way to set a private data member
 class Student:
     ## Static value
@@ -1126,7 +1272,7 @@ Protocols xxxx
 * Mutable Set: 
 * Mutable Mapping: 
 
-### File Access
+### File IO Access
 
 There are five file access modes:
 
@@ -1171,6 +1317,48 @@ def read_students(file):
         yield line
 ```
 
+You mode (w, a, etc.) determines whether what you've written with `write()` overrites your file vs. appends to it.
+
+```python
+## Overrites a file if it exists
+file = open("things.txt", "w")
+file.write("things")
+
+## Appends to an existing file
+file = open("things.txt", "a")
+file.write("things")
+```
+Since you'll almost always access a file with-in a `try-except-finally` block, Python gives you a shorthand `with`:
+
+```python
+file_name = 'something.txt'
+
+with open(file_name, mode='rt', encoding='utf-8') as source:
+    return [ int( line.strip() ) for record in source ]
+```
+
+The `With` constructs closes the file connection when the block terimates.
+
+The `With` construct works on things beside files. It will work on anything that implements the construct management protocol.
+
+```python
+from contextlib import closing
+
+class MyClass:
+    __init__():
+        this.open = True
+
+
+    def close():
+        this.open = False
+
+
+def foobar(name):
+    with closing(MyClass(name)) as MyObject:
+        MyObject.open()
+        MyObject.use()
+```
+
 ### Scripts
 
 You know what a script is, or should. Python scripts carry the "py" file extension. Just remember on Linux and MacOS, you have to permission the file as executable:
@@ -1210,22 +1398,6 @@ if __name__ == '__main__':
 
 Scripts and modules imported into a script are only executed once, on first import.
 
-### Virtual environments
-
-```python
-## Setting up a virtual environment
-pip install virtualenv
-
-## Create the environment
-mkdir <env-name>
-virtualenv <env-name>
-virtualenv --python=<python_version> <env_name>
-virtualenv --version
-
-## activate the environment
-source /
-```
-
 You can keep all virtual environments in a single folder.
 
 ### Flask
@@ -1244,21 +1416,6 @@ def hello():
 if __name__ == "__main__":
     app.run()
 ```
-
-# Frequently Asked Questions (FAQ)
-(Q) How do I clear the session in the REPL?
-
-Use the `system` method of the `os` module to run the `cls` command:
-```Python
-import os
-os.system('CLS')
-```
-
-(Q) Can I use Python with .NET Libraries?
-
-You can use IronPython. IronPython is a port of the Python programming language to the .NET framework. The following article talks about using IronPython to script the SMO library: [Using SMO to manage a MS SQL Database](http://www.ironpython.info/index.php?title=Using_SMO_to_manage_a_MS_SQL_Database).
-
-
 
 ## Iterables
 
@@ -1398,3 +1555,99 @@ for temps in zip(sunday, monday, tuesday):
 * Iterable objects can be iterated item by item.
 * Generators are iterators
 * Generators can maintain explicit internal state between yields
+
+## Arthmatic Operators
+
+Addition +
+Subtraction -
+Division /
+Exponent **
+Multiplication *
+
+```python
+import math
+```
+
+## Working with Excel
+
+There are several Python modules available for working with Excel files. The following examples use Pandas and xlrd. Pandas is an open source library (module) for data manipulation and analysis. *xlrd* is a module for reading and manipulating Microsoft Excel spreadsheets.
+
+Install Pandas with the following:
+
+```sh
+pip3 install pandas
+pip3 install xlrd
+```
+**NOTE**: Examples include an Excel spreadsheet named `sales.xlsx`. Spreadsheet has two tabs: sales and customers.
+
+Pandas
+
+```python
+#!/usr/bin/env python3
+
+import pandas as pd
+
+workbook = pd.ExcelFile("sales.xlsx")
+
+## Print out the sheet names in the workbook
+print("Printing the names of the sheets in the workbook")
+print(workbook.sheet_names)
+
+## Create an object for the `Sales` worksheet
+sales = workbook.parse("sales")
+
+## Print the contents of the sales workbook
+print(sales)
+
+## Display all data in the `Date` column
+print(sales.Date)
+
+## Print the sum of all sales
+print(f"The sales total is ${sales.Amount.sum()}")
+
+## Print the 2nd row in the data set
+print(sales.loc[1])
+```
+
+You can filter the dataset by value. For example, lets say you want to see all the sales for more than $1,800:
+
+```python
+## Sales for more than $1,800
+sales.loc[ sales['Amount'] > 1800 ]
+
+## A list of customers with sales over
+## the specified amount
+sales.loc[ sales['Amount'] > 1800 ]['Customer'].unique()
+```
+
+You can also search a dataframe for a specified value. For example, let's say you want to search for customer transactions by name:
+
+```python
+## Step-1: Creating an index on customer first
+sales.set_index("Customer", inplace=True)
+
+## Step-2: Searching for sales by customer
+print(sales.loc["MMC Inc."])
+```
+We're creating an index on `Customer` then using that index to find records with a specific customer.
+
+```python
+```
+
+# Frequently Asked Questions (FAQ)
+(Q) How do I clear the session in the REPL?
+
+Use the `system` method of the `os` module to run the `cls` command:
+```Python
+import os
+
+## On windows...
+os.system('CLS')
+
+## On MacOS
+os.system('clear')
+```
+
+(Q) Can I use Python with .NET Libraries?
+
+You can use IronPython. IronPython is a port of the Python programming language to the .NET framework. The following article talks about using IronPython to script the SMO library: [Using SMO to manage a MS SQL Database](http://www.ironpython.info/index.php?title=Using_SMO_to_manage_a_MS_SQL_Database).
