@@ -1048,6 +1048,8 @@ from <file_name_without_file_extension> import <class_name>
 t = <ClassName>()
 ```
 
+You can list the modules on your system with `help('modules')`.
+
 ## Virtual Environments
 
 Python installs modules centrally. Central management can be a problematic when separate projects include different versions of the same module. A **virtual environment** isolate projects from one another providing a sandbox for each solution.
@@ -1564,77 +1566,7 @@ Division /
 Exponent **
 Multiplication *
 
-```python
-import math
-```
-
-## Working with Excel
-
-There are several Python modules available for working with Excel files. The following examples use Pandas and xlrd. Pandas is an open source library (module) for data manipulation and analysis. *xlrd* is a module for reading and manipulating Microsoft Excel spreadsheets.
-
-Install Pandas with the following:
-
-```sh
-pip3 install pandas
-pip3 install xlrd
-```
-**NOTE**: Examples include an Excel spreadsheet named `sales.xlsx`. Spreadsheet has two tabs: sales and customers.
-
-Pandas
-
-```python
-#!/usr/bin/env python3
-
-import pandas as pd
-
-workbook = pd.ExcelFile("sales.xlsx")
-
-## Print out the sheet names in the workbook
-print("Printing the names of the sheets in the workbook")
-print(workbook.sheet_names)
-
-## Create an object for the `Sales` worksheet
-sales = workbook.parse("sales")
-
-## Print the contents of the sales workbook
-print(sales)
-
-## Display all data in the `Date` column
-print(sales.Date)
-
-## Print the sum of all sales
-print(f"The sales total is ${sales.Amount.sum()}")
-
-## Print the 2nd row in the data set
-print(sales.loc[1])
-```
-
-You can filter the dataset by value. For example, lets say you want to see all the sales for more than $1,800:
-
-```python
-## Sales for more than $1,800
-sales.loc[ sales['Amount'] > 1800 ]
-
-## A list of customers with sales over
-## the specified amount
-sales.loc[ sales['Amount'] > 1800 ]['Customer'].unique()
-```
-
-You can also search a dataframe for a specified value. For example, let's say you want to search for customer transactions by name:
-
-```python
-## Step-1: Creating an index on customer first
-sales.set_index("Customer", inplace=True)
-
-## Step-2: Searching for sales by customer
-print(sales.loc["MMC Inc."])
-```
-We're creating an index on `Customer` then using that index to find records with a specific customer.
-
-```python
-```
-
-# Frequently Asked Questions (FAQ)
+## Frequently Asked Questions (FAQ)
 (Q) How do I clear the session in the REPL?
 
 Use the `system` method of the `os` module to run the `cls` command:
