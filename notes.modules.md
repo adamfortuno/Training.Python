@@ -2,6 +2,15 @@
 
 Modules are `py` files imported into other scripts and/or modules.
 
+## Helpful Functions and Variables
+You can see all the names in a loaded module with the `dir()` function: `dir(pandas)`.
+
+`dir()`, shows all the names associated with a module.
+`<module>.__path__`, the fully qualified module path.
+`<module>.__file__`, the module's file name.
+`type()`, shows the variable's type.
+`locals()`, the list of declared variables.
+
 ## Documenting a Module
 
 Documentation is captured in docstrings. Comments need to follow the format described in [Google's Python Style guide](http://google.github.io/styleguide/pyguide.html).
@@ -94,9 +103,9 @@ import importlib
 importlib.reload(pandas)
 ```
 
-## Projects
+## Packages
 
-Projects are a mechanism for organizing large collections of relate modules. Think of packages as directories on a file system. Think of modules like files within the directories. A package is nothing more than a directory hosting a __init__.py file. Packages contain modules.
+Packages are a mechanism for organizing large collections of relate modules. Think of packages as directories on a file system. Think of modules like files within the directories. A package is nothing more than a directory hosting a __init__.py file. Packages contain modules.
 
 * All packages are modules, but not all modules are packages.
 * Packages can contain modules or packages (sub-packages).
@@ -156,6 +165,67 @@ project
 * *src*, your source code. `src` typically contains a package directory, which is named after your project.
 
 Your READ ME should be written for people first being introduced to your project.
+
+
+## Namespace Packages - Packages Across Multiple Directories
+
+Python 3.3 introduced namespace packages. 
+
+* Namespace packages can span multiple top level directories.
+* No `__init__.py` file; no package level initialization code.
+
+Python identifies name space packages with the following rubric:
+
+1. Scans each directory in `sys.path`.
+2. Searches for a standard package with a matching name
+3. Searches for a standard module with a matching name
+4. Searches for any matching directories, which it associates with a namespace project
+
+Let's say we have two folders in our Python path: path1 and path2.
+
+```python
+sys.path ['path1', 'path2']
+```
+
+We'd split the namespace package across the folders:
+
+```
+/path1
+  /foo
+    /util
+      __init__.py
+      thing.py
+      
+/path2 
+  /foo
+    /stuff
+      __init__.py
+      that.py
+```
+
+## Executable Directories
+
+Python lets you execue a directory:
+
+```sh
+python <directory-name>
+```
+
+When you do this, Python will execute the `__main__.py` file inside the directory. `__main__.py` is a typical Python module.
+
+This is a really easy way to permit people to execute a solution.
+
+## Executable Zip Files
+
+Python can execute a package compressed in a gzip file. This works like executing a directory:
+
+```sh
+python <file-name>.gz
+```
+
+When you do this, Python will execute the `__main__.py` file inside the compressed file.
+
+Python treats the gzip file like a directory. You place the contents of your project in the gzip file. You don't place the project's directory in the gzip file.
 
 ## Building a Project
 
